@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detector de Peso</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        /* Estilo para la imagen girando */
+        .girar {
+            width: 115%;
+            height: auto;
+            margin-top: 20px;
+            animation: rotacion 3s linear infinite;
+        }
+
+        @keyframes rotacion {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .oculto {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Verificador de Peso</h1>
+    <p>Ingresa tu peso en kg:</p>
+    <input type="number" id="inputPeso" placeholder="Ej. 75">
+    <button onclick="verificarPeso()">Verificar</button>
+
+    <div id="resultado" class="oculto">
+        <img src="noGor.png" alt="No Gordos" class="girar">
+        <audio id="miAudio" loop>
+            <source src="todokver.mp3" type="audio/mpeg">
+            Tu navegador no soporta el audio.
+        </audio>
+    </div>
+
+    <script>
+        function verificarPeso() {
+            const peso = document.getElementById('inputPeso').value;
+            const contenedor = document.getElementById('resultado');
+            const audio = document.getElementById('miAudio');
+
+            if (peso > 70) {
+                // Mostrar imagen y reproducir audio
+                contenedor.classList.remove('oculto');
+                audio.play().catch(error => {
+                    console.log("El navegador bloqueó el audio inicialmente. Haz clic de nuevo.");
+                });
+            } else {
+                // Ocultar y detener si el peso es menor
+                contenedor.classList.add('oculto');
+                audio.pause();
+                audio.currentTime = 0;
+            }
+        }
+    </script>
+
+</body>
+</html>
